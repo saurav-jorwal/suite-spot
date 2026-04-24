@@ -6,6 +6,7 @@ maptilerClient.config.apiKey = mapToken;
 
 module.exports.index = async (req, res) => {
     const allListing = await Listing.find({});
+    console.log("Listings count:", allListing.length);
     res.render("listings/index.ejs", { allListing });
 };
 
