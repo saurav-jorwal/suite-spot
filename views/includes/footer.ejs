@@ -1,14 +1,217 @@
-<footer>
-    <div class="f-info">
-        <div class="f-info-socials">
-            <i class="fa-brands fa-square-facebook"></i>
-            <i class="fa-brands fa-square-instagram"></i>
-            <i class="fa-brands fa-linkedin"></i>
-        </div>
-        <div class="f-info-brand">&copy; Wanderlust Private Limited</div>
-        <div class="f-info-links">
-            <a href="/privacy">Privacy</a>
-            <a href="/terms">Terms</a>
-        </div>
+<footer style="background:#fff; border-top:1px solid #ebebeb; font-family:'DM Sans',sans-serif; color:#222;">
+
+  <!-- Inspiration section -->
+  <div style="padding:3rem 5rem; border-bottom:1px solid #ebebeb;">
+    <p style="font-size:1.3rem; font-weight:700; margin:0 0 1.5rem 0;">Inspiration for future getaways</p>
+
+    <!-- Tabs -->
+    <div style="display:flex; gap:2rem; border-bottom:1px solid #ebebeb; margin-bottom:2rem;">
+      <span class="footer-tab" data-tab="popular"   style="padding-bottom:0.7rem; font-weight:600; font-size:0.95rem; cursor:pointer; border-bottom:2px solid #222; color:#222;">Popular</span>
+      <span class="footer-tab" data-tab="arts"      style="padding-bottom:0.7rem; color:#717171; font-size:0.95rem; cursor:pointer;">Arts &amp; culture</span>
+      <span class="footer-tab" data-tab="beach"     style="padding-bottom:0.7rem; color:#717171; font-size:0.95rem; cursor:pointer;">Beach</span>
+      <span class="footer-tab" data-tab="mountains" style="padding-bottom:0.7rem; color:#717171; font-size:0.95rem; cursor:pointer;">Mountains</span>
+      <span class="footer-tab" data-tab="outdoors"  style="padding-bottom:0.7rem; color:#717171; font-size:0.95rem; cursor:pointer;">Outdoors</span>
+      <span class="footer-tab" data-tab="things"    style="padding-bottom:0.7rem; color:#717171; font-size:0.95rem; cursor:pointer;">Things to do</span>
     </div>
+
+    <div id="tab-popular" class="tab-content">
+      <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:1.2rem 1.5rem;">
+        <% [
+          {city:"Madrid",type:"Apartment rentals"},{city:"Tokyo",type:"Flat rentals"},{city:"Washington",type:"House rentals"},
+          {city:"Wilmington",type:"Flat rentals"},{city:"Key West",type:"Monthly Rentals"},{city:"Kauai",type:"House rentals"},
+          {city:"St. Petersburg",type:"House rentals"},{city:"Galveston",type:"Monthly Rentals"},{city:"Cleveland",type:"House rentals"},
+          {city:"Tampa",type:"Villa rentals"},{city:"Brooklyn",type:"Flat rentals"},{city:"Clearwater",type:"Villa rentals"},
+          {city:"Outer Banks",type:"House rentals"},{city:"Las Vegas",type:"Holiday rentals"},{city:"Cape Cod",type:"Flat rentals"},
+          {city:"Dublin",type:"Flat rentals"},{city:"Milan",type:"Villa rentals"}
+        ].forEach(d => { %>
+          <a href="/listings" style="text-decoration:none; color:inherit;">
+            <div style="font-weight:600; font-size:0.9rem;"><%- d.city %></div>
+            <div style="color:#717171; font-size:0.85rem;"><%- d.type %></div>
+          </a>
+        <% }) %>
+      </div>
+    </div>
+
+    <div id="tab-arts" class="tab-content" style="display:none;">
+      <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:1.2rem 1.5rem;">
+        <% [
+          {city:"Île de Ré",type:"Holiday rentals"},{city:"Paris",type:"Flat rentals"},{city:"Haeundae Beach",type:"Flat rentals"},
+          {city:"Cuyahoga Valley",type:"Holiday rentals"},{city:"Times Square",type:"House rentals"},{city:"Jay Peak Resort",type:"Apartment rentals"},
+          {city:"Lake Gregory",type:"House rentals"},{city:"Olympic National Park",type:"Flat rentals"},{city:"SoFi Stadium",type:"House rentals"},
+          {city:"Flathead Lake",type:"Cabin rentals"},{city:"Playa Venao",type:"Villa rentals"},{city:"Lake Tahoe",type:"Cottage rentals"},
+          {city:"Badlands",type:"Holiday rentals"},{city:"Gozo",type:"Villa rentals"},{city:"Lambeau Field",type:"House rentals"},
+          {city:"Canal Saint-Martin",type:"Apartment rentals"},{city:"Samara Beach",type:"Holiday rentals"}
+        ].forEach(d => { %>
+          <a href="/listings" style="text-decoration:none; color:inherit;">
+            <div style="font-weight:600; font-size:0.9rem;"><%- d.city %></div>
+            <div style="color:#717171; font-size:0.85rem;"><%- d.type %></div>
+          </a>
+        <% }) %>
+      </div>
+    </div>
+
+    <div id="tab-beach" class="tab-content" style="display:none;">
+      <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:1.2rem 1.5rem;">
+        <% [
+          {city:"Buyé Beach",type:"Villa rentals"},{city:"El Medano Beach",type:"Holiday rentals"},{city:"Bradley Beach",type:"Holiday rentals"},
+          {city:"Bingin Beach",type:"Pet-friendly rentals"},{city:"Bonita Beach",type:"Monthly Rentals"},{city:"Wailea",type:"Apartment rentals"},
+          {city:"Armacao dos Buzios",type:"House rentals"},{city:"Maryland Beach",type:"Monthly Rentals"},{city:"Jamaica Beach",type:"Pet-friendly rentals"},
+          {city:"Patong Beach",type:"Apartment rentals"},{city:"Galveston Island",type:"Apartment rentals"},{city:"Butler Beach",type:"Monthly Rentals"},
+          {city:"Turtle Beach",type:"Monthly Rentals"},{city:"Cabrera",type:"Holiday rentals"},{city:"Zipolite, Oaxaca",type:"House rentals"},
+          {city:"Ksamil",type:"Flat rentals"},{city:"El Nido",type:"Holiday rentals"}
+        ].forEach(d => { %>
+          <a href="/listings" style="text-decoration:none; color:inherit;">
+            <div style="font-weight:600; font-size:0.9rem;"><%- d.city %></div>
+            <div style="color:#717171; font-size:0.85rem;"><%- d.type %></div>
+          </a>
+        <% }) %>
+      </div>
+    </div>
+
+    <div id="tab-mountains" class="tab-content" style="display:none;">
+      <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:1.2rem 1.5rem;">
+        <% [
+          {city:"San Bernardino",type:"Apartment rentals"},{city:"Bristol",type:"Holiday rentals"},{city:"Red Lodge",type:"Cabin rentals"},
+          {city:"Alpharetta",type:"Holiday rentals"},{city:"Guatemala City",type:"Flat rentals"},{city:"Visalia",type:"Cabin rentals"},
+          {city:"Tucson",type:"Apartment rentals"},{city:"Idaho Springs",type:"Pet-friendly rentals"},{city:"Glendale",type:"Holiday rentals"},
+          {city:"Reno",type:"Pet-friendly rentals"},{city:"Ozark",type:"Pet-friendly rentals"},{city:"San Mateo",type:"Cabin rentals"},
+          {city:"Bentonville",type:"Pet-friendly rentals"},{city:"Anacortes",type:"Monthly Rentals"},{city:"Lawrenceville",type:"Cabin rentals"},
+          {city:"Sunnyvale",type:"Monthly Rentals"},{city:"Carson City",type:"Monthly Rentals"}
+        ].forEach(d => { %>
+          <a href="/listings" style="text-decoration:none; color:inherit;">
+            <div style="font-weight:600; font-size:0.9rem;"><%- d.city %></div>
+            <div style="color:#717171; font-size:0.85rem;"><%- d.type %></div>
+          </a>
+        <% }) %>
+      </div>
+    </div>
+
+    <div id="tab-outdoors" class="tab-content" style="display:none;">
+      <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:1.2rem 1.5rem;">
+        <% [
+          {city:"Niagara Falls",type:"Villa rentals"},{city:"Sequim",type:"Beachfront rentals"},{city:"Corvallis",type:"Apartment rentals"},
+          {city:"Scottsdale",type:"Villa rentals"},{city:"Uvita",type:"House rentals"},{city:"Juan Dolio",type:"Beachfront rentals"},
+          {city:"Highlands",type:"Apartment rentals"},{city:"Key Colony Beach",type:"Flat rentals"},{city:"Squamish",type:"Flat rentals"},
+          {city:"Carolina",type:"Flat rentals"},{city:"Banff",type:"Holiday rentals"},{city:"Morro Bay",type:"Flat rentals"},
+          {city:"Dana Point",type:"House rentals"},{city:"Island Park",type:"Apartment rentals"},{city:"Littleton",type:"House rentals"},
+          {city:"Kanab",type:"Holiday rentals"},{city:"Mammoth Lakes",type:"Flat rentals"}
+        ].forEach(d => { %>
+          <a href="/listings" style="text-decoration:none; color:inherit;">
+            <div style="font-weight:600; font-size:0.9rem;"><%- d.city %></div>
+            <div style="color:#717171; font-size:0.85rem;"><%- d.type %></div>
+          </a>
+        <% }) %>
+      </div>
+    </div>
+
+    <div id="tab-things" class="tab-content" style="display:none;">
+      <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:1.2rem 1.5rem;">
+        <% [
+          {city:"Durham",type:"Art and culture"},{city:"Apennine Mountains",type:"Entertainment"},{city:"Norfolk",type:"Things to do"},
+          {city:"Mexico City",type:"Wellness"},{city:"Seine",type:"Art and culture"},{city:"Paris",type:"Entertainment"},
+          {city:"Rome",type:"Nature and outdoors"},{city:"San Juan",type:"Tours"},{city:"Honshu",type:"Wellness"},
+          {city:"Plainview",type:"Art and culture"},{city:"Florence",type:"Sightseeing"},{city:"Tokyo",type:"Tours"},
+          {city:"Channel Islands",type:"Food and drink"},{city:"7th Arrondissement",type:"Things to do"},{city:"Elgin",type:"Tours"},
+          {city:"Medellín River",type:"Art and culture"},{city:"Barcelonès",type:"Sightseeing"}
+        ].forEach(d => { %>
+          <a href="/listings" style="text-decoration:none; color:inherit;">
+            <div style="font-weight:600; font-size:0.9rem;"><%- d.city %></div>
+            <div style="color:#717171; font-size:0.85rem;"><%- d.type %></div>
+          </a>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Middle: Support / Hosting / SuiteSpot -->
+  <div style="padding:3rem 5rem; border-bottom:1px solid #ebebeb; display:grid; grid-template-columns:repeat(3,1fr); gap:2rem;">
+    <div>
+      <p style="font-weight:700; font-size:1rem; margin:0 0 1.2rem 0;">Support</p>
+      <% ["Help Centre","Get help with a safety issue","AirCover","Anti-discrimination","Disability support","Cancellation options","Report neighbourhood concern"].forEach(item => { %>
+        <a href="/listings" style="display:block; color:#222; text-decoration:none; margin-bottom:0.7rem; font-size:0.92rem;"><%- item %></a>
+      <% }) %>
+    </div>
+    <div>
+      <p style="font-weight:700; font-size:1rem; margin:0 0 1.2rem 0;">Hosting</p>
+      <% [
+        {label:"Add a listing", href:"/listings/new"},
+        {label:"Explore listings", href:"/listings"},
+        {label:"Travel Map", href:"/travel-map"},
+        {label:"AirCover for Hosts", href:"/listings"},
+        {label:"Hosting resources", href:"/listings"},
+        {label:"Community forum", href:"/listings"},
+        {label:"Hosting responsibly", href:"/listings"},
+        {label:"Join a free hosting class", href:"/listings"},
+        {label:"Find a co-host", href:"/listings"},
+        {label:"Refer a host", href:"/listings"},
+      ].forEach(item => { %>
+        <a href="<%- item.href %>" style="display:block; color:#222; text-decoration:none; margin-bottom:0.7rem; font-size:0.92rem;"><%- item.label %></a>
+      <% }) %>
+    </div>
+    <div>
+      <p style="font-weight:700; font-size:1rem; margin:0 0 1.2rem 0;">SuiteSpot</p>
+      <% [
+        {label:"2025 Summer Release", href:"/listings"},
+        {label:"Newsroom", href:"/listings"},
+        {label:"Careers", href:"/listings"},
+        {label:"Investors", href:"/listings"},
+        {label:"SuiteSpot.org emergency stays", href:"/listings"},
+      ].forEach(item => { %>
+        <a href="<%- item.href %>" style="display:block; color:#222; text-decoration:none; margin-bottom:0.7rem; font-size:0.92rem;"><%- item.label %></a>
+      <% }) %>
+    </div>
+  </div>
+
+<!-- Bottom bar -->
+<div style="padding:1.5rem 5rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+  
+  <!-- Left -->
+  <div style="font-size:0.9rem;">
+    <span>&copy; 2026 SuiteSpot, Inc.</span>
+  </div>
+
+  <!-- Center (your links) -->
+  <div style="display:flex; align-items:center; justify-content:center; gap:1rem; flex-wrap:wrap; font-size:0.9rem; text-align:center;">
+    
+    <a href="https://github.com/saurav-jorwal" target="_blank" style="color:#222; text-decoration:none;">GitHub</a>
+    <span style="color:#717171;">·</span>
+
+    <a href="https://www.linkedin.com/in/saurav-jorwal" target="_blank" style="color:#222; text-decoration:none;">LinkedIn</a>
+    <span style="color:#717171;">·</span>
+
+    <a href="https://YOUR_PORTFOLIO.com" target="_blank" style="color:#222; text-decoration:none;">Portfolio</a>
+    <span style="color:#717171;">·</span>
+
+    <a href="mailto:sauravjorwal44@gmail.com" style="color:#222; text-decoration:none;">sauravjorwal44@gmail.com</a>
+    <span style="color:#717171;">·</span>
+
+    <a href="tel:+91XXXXXXXXXX" style="color:#222; text-decoration:none;">+91-9588950817</a>
+
+  </div>
+
+  <!-- Right -->
+  <div style="display:flex; align-items:center; gap:1rem; font-size:0.9rem;">
+    <span>🌐 English (IN)</span>
+    <span>₹ INR</span>
+  </div>
+
+</div>
+
+  <script>
+    document.querySelectorAll('.footer-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.footer-tab').forEach(t => {
+          t.style.fontWeight = '';
+          t.style.color = '#717171';
+          t.style.borderBottom = 'none';
+        });
+        this.style.fontWeight = '600';
+        this.style.color = '#222';
+        this.style.borderBottom = '2px solid #222';
+        document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+        document.getElementById('tab-' + this.dataset.tab).style.display = 'block';
+      });
+    });
+  </script>
+
 </footer>

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap");
+
+      body {
+        margin: 0;
+      }
+
+      html, body {
+        height: 100%;
+        overflow: hidden;
+      }
+      .globe-page {
+        background: #f7f7f7;
+        color: #222;
+        min-height: 100vh;
+        margin: 0;
+        width: 100vw;
+        padding: 2rem 2rem 0.8rem;
+        font-family: "DM Sans", sans-serif;
+        position: relative;
+      }
+
+      .globe-header {
+        margin-top: -20px;
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .globe-header h1 {
+        font-family: "Playfair Display", serif;
+        font-size: 2.8rem;
+        margin-top: 0;
+        color: rgba(254, 66, 77, 0.7);
+        letter-spacing: -0.02em;
+      }
+
+      .globe-header p {
+        color: #8a8a9a;
+        font-size: 1rem;
+        font-weight: 300;
+      }
+
+      .globe-container {
+        display: flex;
+        gap: 2rem;
+        align-items: start;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      #globe-svg {
+        cursor: grab;
+        filter: drop-shadow(0 0 40px rgba(254, 66, 77, 0.15));
+      }
+
+      #globe-svg:active {
+        cursor: grabbing;
+      }
+
+      .country-tooltip {
+        position: fixed;
+        background: rgba(20, 20, 30, 0.95);
+        border: 1px solid rgba(254, 66, 77, 0.4);
+        color: #f0ece4;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        pointer-events: none;
+        display: none;
+        z-index: 1000;
+        font-family: "DM Sans", sans-serif;
+      }
+
+      .sidebar {
+        width: 280px;
+        flex-shrink: 0;
+      }
+
+      .visited-list {
+        background: #fe424d14;
+        border: 1px solid #eee;
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .visited-list h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.2rem;
+        margin-top: -0.4rem;
+        margin-bottom: 1rem;
+        color: black;
+      }
+
+      .visited-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        font-size: 0.85rem;
+        color: #8a8a9a;
+      }
+
+      .visited-item:last-child {
+        border-bottom: none;
+      }
+
+      .remove-btn {
+        background: none;
+        border: 1px solid transparent; 
+        color: #fe424d;
+        cursor: pointer;
+        font-size: 0.75rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+      }
+
+      .remove-btn:hover {
+        border: 1px solid #fe424d;
+      }
+
+      .stats-box {
+        background: rgba(254, 66, 77, 0.08);
+        border: 1px solid rgba(254, 66, 77, 0.2);
+        border-radius: 16px;
+        padding: 1.5rem;
+        text-align: center;
+      }
+
+      .stats-box .count {
+        font-family: "Playfair Display", serif;
+        font-size: 3rem;
+        color: #fe424d;
+        line-height: 1;
+      }
+
+      .stats-box .label {
+        color: #8a8a9a;
+        font-size: 0.85rem;
+        margin-top: 0.3rem;
+      }
+
+      .globe-hint {
+        text-align: center;
+        color: #555566;
+        font-size: 0.78rem;
+        margin-top: -1.4rem;
+      }
+
+      .visited-list::-webkit-scrollbar {
+        width: 4px;
+      }
+      .visited-list::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .visited-list::-webkit-scrollbar-thumb {
+        background: rgba(254, 66, 77, 0.3);
+        border-radius: 2px;
+      }
+
+      .back-btn {
+        position: absolute;
+        left: 40px;   
+        top: 20px;    
+        text-decoration: none;
+        color: #fe424d;
+        font-weight: 500;
+        font-size: 0.9rem;
+
+        padding: 6px 14px;
+        border: 1px solid rgba(254, 66, 77, 0.3);
+        border-radius: 25px;
+
+        transition: all 0.2s ease;
+      }
+
+      .back-btn:hover {
+        background: #fe424d;
+        color: white;
+      }
+    </style>
+
+    <div class="globe-page">
+      <a href="/listings" class="back-btn">Back</a>
+      <div class="globe-header">
+        <h1>Your Travel Map</h1>
+        <p>
+          Click any country to mark it as visited. Drag to rotate the globe.
+        </p>
+      </div>
+
+      <div class="globe-container">
+        <div>
+          <svg id="globe-svg" width="560" height="560"></svg>
+          <p class="globe-hint">
+            🌍 Drag to rotate &nbsp;·&nbsp; Click country to toggle visited
+          </p>
+        </div>
+
+        <div class="sidebar">
+          <div class="stats-box">
+            <div class="count" id="visit-count">0</div>
+            <div class="label">countries visited</div>
+          </div>
+
+          <br />
+
+          <div class="visited-list">
+            <h3>Visited Countries</h3>
+            <div id="visited-items">
+              <p style="color: #555566; font-size: 0.85rem">
+                Click countries on the globe to add them.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="country-tooltip" id="tooltip"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+
+    <script>
+      const DEFAULT_VISITED = [
+        "India",
+        "Sri Lanka",
+        "Nepal",
+        "Thailand",
+        "Japan",
+        "France",
+        "Italy",
+        "Spain",
+        "United States of America",
+        "Brazil",
+        "Australia",
+        "South Africa",
+        "Egypt",
+        "Mexico",
+        "Indonesia",
+        "Greece",
+      ];
+
+      const width = 560,
+        height = 560,
+        radius = 240;
+      const svg = d3.select("#globe-svg");
+      const tooltip = document.getElementById("tooltip");
+
+      let visitedSet = new Set(
+        JSON.parse(localStorage.getItem("fd_visited") || "null") ||
+          DEFAULT_VISITED,
+      );
+
+      const projection = d3
+        .geoOrthographic()
+        .scale(radius)
+        .translate([width / 2, height / 2])
+        .clipAngle(90);
+
+      const path = d3.geoPath().projection(projection);
+
+      // Ocean
+      svg
+        .append("circle")
+        .attr("cx", width / 2)
+        .attr("cy", height / 2)
+        .attr("r", radius)
+        .attr("fill", "#0d1b2a");
+
+      // Graticule
+      const graticule = d3.geoGraticule();
+      svg
+        .append("path")
+        .datum(graticule())
+        .attr("class", "graticule")
+        .attr("fill", "none")
+        .attr("stroke", "rgba(255,255,255,0.04)")
+        .attr("d", path);
+
+      const countryGroup = svg.append("g");
+
+      let worldData;
+
+      fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
+        .then((r) => r.json())
+        .then(async (world) => {
+          worldData = world;
+          const countries = topojson.feature(world, world.objects.countries);
+          const countryNames = await fetchCountryNames();
+
+          countryGroup
+            .selectAll("path")
+            .data(countries.features)
+            .enter()
+            .append("path")
+            .attr("d", path)
+            .attr("fill", (d) => {
+              const name = countryNames[d.id] || "";
+              return visitedSet.has(name)
+                ? "rgba(254,66,77,0.9)"
+                : "rgba(255,255,255,0.18)";
+            })
+            .attr("stroke", "rgba(255,255,255,0.15)")
+            .attr("stroke-width", 0.5)
+            .style("cursor", "pointer")
+            .on("mouseover", function (event, d) {
+              const name = countryNames[d.id] || "Unknown";
+              d3.select(this).attr(
+                "fill",
+                visitedSet.has(name)
+                  ? "rgba(254,66,77,0.95)"
+                  : "rgba(255,255,255,0.25)",
+              );
+              tooltip.style.display = "block";
+              tooltip.textContent = name + (visitedSet.has(name) ? " ✓" : "");
+            })
+            .on("mousemove", function (event) {
+              tooltip.style.left = event.clientX + 12 + "px";
+              tooltip.style.top = event.clientY - 28 + "px";
+            })
+            .on("mouseout", function (event, d) {
+              const name = countryNames[d.id] || "";
+              d3.select(this).attr(
+                "fill",
+                visitedSet.has(name)
+                  ? "rgba(254,66,77,0.9)"
+                  : "rgba(255,255,255,0.18)",
+              );
+              tooltip.style.display = "none";
+            })
+            .on("click", function (event, d) {
+              event.stopPropagation();
+              const name = countryNames[d.id] || "";
+              if (!name || name === "Unknown") return;
+              if (visitedSet.has(name)) {
+                visitedSet.delete(name);
+              } else {
+                visitedSet.add(name);
+              }
+              saveVisited();
+              updateColors(countryNames);
+              renderVisitedList(countryNames);
+            });
+
+          renderVisitedList(countryNames);
+          window._countryNames = countryNames;
+        });
+
+      async function fetchCountryNames() {
+        const r = await fetch(
+          "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json",
+        );
+        const world = await r.json();
+        // Use a static name map for common countries
+        return getNameMap();
+      }
+
+      function getNameMap() {
+        return {
+          4: "Afghanistan",
+          8: "Albania",
+          12: "Algeria",
+          24: "Angola",
+          32: "Argentina",
+          36: "Australia",
+          40: "Austria",
+          50: "Bangladesh",
+          56: "Belgium",
+          64: "Bhutan",
+          68: "Bolivia",
+          76: "Brazil",
+          100: "Bulgaria",
+          116: "Cambodia",
+          120: "Cameroon",
+          124: "Canada",
+          152: "Chile",
+          156: "China",
+          170: "Colombia",
+          180: "DR Congo",
+          188: "Costa Rica",
+          191: "Croatia",
+          192: "Cuba",
+          196: "Cyprus",
+          203: "Czech Republic",
+          208: "Denmark",
+          218: "Ecuador",
+          818: "Egypt",
+          231: "Ethiopia",
+          246: "Finland",
+          250: "France",
+          276: "Germany",
+          288: "Ghana",
+          300: "Greece",
+          320: "Guatemala",
+          332: "Haiti",
+          340: "Honduras",
+          348: "Hungary",
+          356: "India",
+          360: "Indonesia",
+          364: "Iran",
+          368: "Iraq",
+          372: "Ireland",
+          376: "Israel",
+          380: "Italy",
+          388: "Jamaica",
+          392: "Japan",
+          400: "Jordan",
+          398: "Kazakhstan",
+          404: "Kenya",
+          410: "South Korea",
+          414: "Kuwait",
+          418: "Laos",
+          422: "Lebanon",
+          430: "Liberia",
+          434: "Libya",
+          458: "Malaysia",
+          484: "Mexico",
+          504: "Morocco",
+          508: "Mozambique",
+          524: "Nepal",
+          528: "Netherlands",
+          554: "New Zealand",
+          562: "Niger",
+          566: "Nigeria",
+          578: "Norway",
+          586: "Pakistan",
+          591: "Panama",
+          604: "Peru",
+          608: "Philippines",
+          616: "Poland",
+          620: "Portugal",
+          630: "Puerto Rico",
+          634: "Qatar",
+          642: "Romania",
+          643: "Russia",
+          682: "Saudi Arabia",
+          686: "Senegal",
+          694: "Sierra Leone",
+          706: "Somalia",
+          710: "South Africa",
+          724: "Spain",
+          144: "Sri Lanka",
+          729: "Sudan",
+          752: "Sweden",
+          756: "Switzerland",
+          760: "Syria",
+          762: "Tajikistan",
+          764: "Thailand",
+          768: "Togo",
+          788: "Tunisia",
+          792: "Turkey",
+          800: "Uganda",
+          804: "Ukraine",
+          784: "United Arab Emirates",
+          826: "United Kingdom",
+          840: "United States of America",
+          858: "Uruguay",
+          860: "Uzbekistan",
+          862: "Venezuela",
+          704: "Vietnam",
+          887: "Yemen",
+          894: "Zambia",
+          716: "Zimbabwe",
+        };
+      }
+
+      function updateColors(countryNames) {
+        countryGroup.selectAll("path").attr("fill", (d) => {
+          const name = countryNames[d.id] || "";
+          return visitedSet.has(name)
+            ? "rgba(254,66,77,0.9)"
+            : "rgba(255,255,255,0.18)";
+        });
+      }
+
+      function renderVisitedList(countryNames) {
+        const container = document.getElementById("visited-items");
+        const count = document.getElementById("visit-count");
+        const arr = [...visitedSet].sort();
+        count.textContent = arr.length;
+
+        if (arr.length === 0) {
+          container.innerHTML =
+            '<p style="color:#555566; font-size:0.85rem;">Click countries on the globe to add them.</p>';
+          return;
+        }
+
+        container.innerHTML = arr
+          .map(
+            (name) => `
+    <div class="visited-item">
+      <span>${name}</span>
+      <button class="remove-btn" onclick="removeCountry('${name.replace(/'/g, "\\'")}')">remove</button>
+    </div>
+  `,
+          )
+          .join("");
+      }
+
+      window.removeCountry = function (name) {
+        visitedSet.delete(name);
+        saveVisited();
+        updateColors(window._countryNames || {});
+        renderVisitedList(window._countryNames || {});
+      };
+
+      function saveVisited() {
+        localStorage.setItem("fd_visited", JSON.stringify([...visitedSet]));
+      }
+
+      // Drag to rotate
+      let lastPos = null;
+      svg.call(
+        d3
+          .drag()
+          .on("start", (event) => {
+            lastPos = [event.x, event.y];
+          })
+          .on("drag", (event) => {
+            if (!lastPos) return;
+            const dx = event.x - lastPos[0];
+            const dy = event.y - lastPos[1];
+            const r = projection.rotate();
+            projection.rotate([r[0] + dx * 0.4, r[1] - dy * 0.4]);
+            svg.selectAll("path").attr("d", path);
+            lastPos = [event.x, event.y];
+          })
+          .on("end", () => {
+            lastPos = null;
+          }),
+      );
+
+      // Auto-rotate
+      let autoRotate = d3.timer((elapsed) => {
+        const r = projection.rotate();
+        projection.rotate([r[0] + 0.15, r[1]]);
+        svg.selectAll("path").attr("d", path);
+      });
+
+      svg.on("mouseenter", () => autoRotate.stop());
+
+      svg.on("mouseleave", () => {
+        autoRotate = d3.timer((elapsed) => {
+          const r = projection.rotate();
+          projection.rotate([r[0] + 0.15, r[1]]);
+          svg.selectAll("path").attr("d", path);
+        });
+      });
+    </script>
+  </body>
+</html>
