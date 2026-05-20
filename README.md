@@ -37,7 +37,8 @@ A full-stack property listing web application where users can create, browse, ed
 1. Clone the repo
 
 ```bash
-git clone https://github.com/saurav-jorwal/suite-spot.git
+ 
+[git clone](https://github.com/saurav-jorwal/suite-spot.git)
 cd SuiteSpot
 ```
 
@@ -98,6 +99,19 @@ SuiteSpot/
 └── init/               # DB seed data
 ```
 
-## License
+## Future Improvements
 
-ISC
+- Filter listings by location, price, or category
+- Booking and reservation system
+- User profile pages
+- Listing favorites / wishlist
+- Ratings aggregation and sorting
+- Mobile-responsive UI improvements
+
+---
+
+## Author
+
+**Saurav Kumar Meena**
+B.Tech CSE – RTU Kota
+[LinkedIn](https://linkedin.com/in/saurav-kumar-meena-b633b83b5/) • [GitHub](https://github.com/saurav-jorwal)
