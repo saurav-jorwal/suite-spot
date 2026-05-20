@@ -114,4 +114,9 @@ SuiteSpot/
 
 **Saurav Kumar Meena**
 B.Tech CSE – RTU Kota
-[LinkedIn](https://linkedin.com/in/saurav-kumar-meena-b633b83b5/) • [GitHub](https://github.com/saurav-jorwal)
+
+LinkedIn
+https://linkedin.com/in/saurav-kumar-meena-b633b83b5/
+
+GitHub
+https://github.com/saurav-jorwal
