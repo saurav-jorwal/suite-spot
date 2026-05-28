@@ -100,6 +100,6 @@ app.use((err, req, res, next) => {
 });
 
 // Server start
-app.listen(8080, () => {
-    console.log("App is listening on port 8080");
-});
+// app.listen(8080, () => {
+//     console.log("App is listening on port 8080");
+// });
