@@ -23,6 +23,9 @@ const dbUrl = process.env.ATLASDB_URL;
 main()
     .then(() => {
         console.log("Connected to DB");
+        app.listen(8080, () => {
+            console.log("App is listening on port 8080");
+        });
     })
     .catch(err => console.log(err));
 
